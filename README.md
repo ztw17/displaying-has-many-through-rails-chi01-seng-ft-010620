@@ -3,8 +3,10 @@
 
 ## Objectives
 
-1. Objective 1
-2. Objective 2.
+1. construct a bi-directional has many through.
+2. query for associations via the belongs_to, has_many, and has_many through associations.
+3. iterate over associations in a view and display associated data for a primary instance.
+4. identify the join model in a has many through.
 
 ## Notes
 
@@ -28,7 +30,7 @@ user model with associations
   has_many comments
   has_many posts, through comments
 
-you might not think of something like a comment functiononing as a join model but it does. anything with 2 fks that is wired with a through relationship is a join model. Sometimes they are real things, like in this example, but soon we'll be dealing with something called a PostTag
+you might not think of something like a comment functiononing as a join model but it does. anything with 2 fks that is wired with a through relationship is a join model.
 
 on a post show page we want to list all the comments. easy.
 
@@ -45,12 +47,9 @@ Now in each comment, we're linking to the user#show page. On that page we want t
   post.title
 end
 
-That's still pretty simple, we're hitting the through relationship but nothing really changes because the entire join model is abstracted away.
+we're hitting the through relationship but nothing really changes because the entire join model is abstracted away.
 
-But what if we wanted to show the comments the user has left on each post?
-
-@user.comments.group(:post) do |p|
-
+conclusion - displaying data on a has many through isn't too different than a belongs to and a has many. that's the point of the abstraction. you shouldn't worry about how activerecord got the data, whether through a join query or not. Just make sure the instance or relation you're using in your code actually has the data you want.
 
 
 ## Resources
