@@ -55,3 +55,5 @@ conclusion - displaying data on a has many through isn't too different than a be
 ## Resources
 
 https://robots.thoughtbot.com/accepts-nested-attributes-for-with-has-many-through
+
+<a href='https://learn.co/lessons/displaying-has-many-through-rails' data-visibility='hidden'>View this lesson on Learn.co</a>
