@@ -8,6 +8,48 @@
 3. iterate over associations in a view and display associated data for a primary instance.
 4. identify the join model in a has many through.
 
+## Overview
+
+We've seen how we can use simple associations to display data to our users in Rails, but what about more complex relationships? Lucky for us, the interface for displaying this type of data is just as easy, thanks to ActiveRecord and `has_many through`. 
+
+## Commenting on our Blog
+
+Let's say you're making a blog and you want to give users the ability to sign up and comment on your posts. What's the relationship between a post and a comment?  If you said, "a comment belongs to a post, and a post has many comments," give yourself a pat on the back! 
+
+What about the relationship between a user and a comment? Again, the user has many comments and the comment belongs to the user. So far, this is pretty straight forward. 
+
+Things get slightly more complicated when we talk about the relationship between a user and posts that the user has commented on. How would you describe that relationship? Well, a user obviously can comment on many posts, and a post has comments by many users. Yep, this is a many to many relationship. We can setup a many-to-many relationship using a join table. You probably remember seeing this in previous READMEs - in this case, `comments` will act as our Join table. 
+
+Let's set this up. First, we'll need migrations for a comments table, posts table, and users table. 
+
+
+
+```ruby
+#app/models/post.rb
+class Post
+  has_many :comments
+  has_many :users, through: :comments
+end
+```
+
+```ruby
+#app/models/user.rb
+class User
+  has_many :comments
+  has_many :posts, through: :comments
+end
+```
+
+```ruby
+#app/models/comment.rb
+class Comment
+  belongs_to :user
+  belongs_to :post
+end
+```
+
+
+
 ## Notes
 
 As relationships become more complex and require join models with has many though associations some additional considerations must be taken into account within our rails app.
