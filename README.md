@@ -130,52 +130,25 @@ Comments:
   <% end %>
 ```
 
+This is the same as we've done before - we're simply looking at data associated with posts and comments. Notice that we can manually go through and pull out the user through the comment. Calling `comment.user` returns to use the user object associated with that comment. We can then call any method that our user responds to, such as username.
 
+## Adding Posts to Our Users
 
+Let's say that on our user's show page, we want our users to see a list of all of the posts that they've commented on. What would that look like?
 
-## Notes
+Because we've setup a join model, the interface will look almost identical. We can simply call on the `posts` method on our user and iterate through.
 
-As relationships become more complex and require join models with has many though associations some additional considerations must be taken into account within our rails app.
+```erb
+<h2><%= @user.username %> </h2> has commented on the following posts:
 
-Let's look at a blog domain with posts that have many comments but each comment is by a unique user.
+<% @user.posts.each do |post| %>
+  <%= link_to post.title, post_path(post) %>
+<% end %>
+```
 
-post table schema / migration
-user table schema / migration
-comments table schema / migration
+## Conclusion
 
-comments model with associations
-  belongs_to user
-  belongs_to post
-
-post model with associations
-  has_many comments
-  has_many users, through comments
-
-user model with associations
-  has_many comments
-  has_many posts, through comments
-
-you might not think of something like a comment functiononing as a join model but it does. anything with 2 foreign keys that is wired with a through relationship is a join model.
-
-on a post show page we want to list all the comments. easy.
-
-@post.comments.each do |comment|
-  comment.content
-  comment.user.name
-end
-
-we're not using the through relationship and are just using on the comment association.
-
-Now in each comment, we're linking to the user#show page. On that page we want to show posts that the user has commented on.
-
-@user.posts.each do |post|
-  post.title
-end
-
-we're hitting the through relationship but nothing really changes because the entire join model is abstracted away.
-
-conclusion - displaying data on a has many through isn't too different than a belongs to and a has many. that's the point of the abstraction. you shouldn't worry about how activerecord got the data, whether through a join query or not. Just make sure the instance or relation you're using in your code actually has the data you want.
-
+Displaying data through a has_many, through relationship looks identical to displaying data through a normal relationship. That's the beauty of abstraction - all of the details about how our models are associated with each other get abstracted away, and we can focus simply on the presentation. 
 
 ## Resources
 
