@@ -22,6 +22,22 @@ What about the relationship between a user and a comment? Again, the user has ma
 
 Things get slightly more complicated when we talk about the relationship between a user and posts that the user has commented on. How would you describe that relationship? Well, a user obviously can comment on many posts, and a post has comments by many users. Yep, this is a many to many relationship. We can setup a many-to-many relationship using a join table. In this case, `comments` will act as our Join Table. Any table that contains two foreign keys can be thought of as a join table.  A row in our comments table will look something like this:
 
+<table>
+  <tr>
+    <td> id </td>
+    <td> content </td>
+    <td> post_id </td>
+    <td> user_id </td>
+  </tr>
+  
+  <tr>
+    <td> 1 </td>
+    <td> "I loved this post!" </td>
+    <td> 5 </td>
+    <td> 3 </td>
+  </tr>
+</table>
+
  |id | content     | post_id     | user_id |
 | :------------- | :------------- | :-------------|
 |1|"I loved this post!"      | 5       | 3
