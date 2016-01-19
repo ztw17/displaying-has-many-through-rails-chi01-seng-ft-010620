@@ -38,10 +38,6 @@ Things get slightly more complicated when we talk about the relationship between
   </tr>
 </table>
 
- |id | content     | post_id     | user_id |
-| :------------- | :------------- | :-------------|
-|1|"I loved this post!"      | 5       | 3
-
 For this instance, we know that comment with the id of `1` was created by the user with id `3` for the post with id `5`. We have all of the information we need to determine all of the posts that a particular user has commented on, as well as all of the users who commented on any post. When we're done, we'll be able to simply call `@user.posts` to get a collection of all of those posts.
 
 Let's set this up. First, we'll need migrations for a comments table, posts table, and users table. We've included migrations and models in this repo so you can follow along.
