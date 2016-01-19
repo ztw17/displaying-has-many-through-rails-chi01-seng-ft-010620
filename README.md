@@ -3,14 +3,14 @@
 
 ## Objectives
 
-1. construct a bi-directional has many through.
-2. query for associations via the belongs_to, has_many, and has_many through associations.
-3. iterate over associations in a view and display associated data for a primary instance.
-4. identify the join model in a has many through.
+1. Construct a bi-directional has many through.
+2. Query for associations via the belongs_to, has_many, and has_many through associations.
+3. Iterate over associations in a view and display associated data for a primary instance.
+4. Identify the join model in a has many through.
 
 ## Overview
 
-We've seen how we can use simple associations to display data to our users in Rails, but what about more complex relationships? Lucky for us, the interface for displaying this type of data is just as easy, thanks to ActiveRecord and `has_many through`.
+We've seen how we can use simple associations to display data to our users in Rails, but what about more complex relationships? Lucky for us, the interface for displaying this type of data is just as easy, thanks to ActiveRecord and `has_many, through`.
 
 ## Lesson
 
@@ -20,13 +20,13 @@ Let's say you're making a blog and you want to give users the ability to sign up
 
 What about the relationship between a user and a comment? Again, the user has many comments and the comment belongs to the user. So far, this is pretty straight forward.
 
-Things get slightly more complicated when we talk about the relationship between a user and posts that the user has commented on. How would you describe that relationship? Well, a user obviously can comment on many posts, and a post has comments by many users. Yep, this is a many to many relationship. We can setup a many-to-many relationship using a join table. You probably remember seeing this in previous READMEs - in this case, `comments` will act as our Join table. Any table that contains two foreign keys can be thought of as a join table. In this case, our `comments` table will relate our posts with our users. A row in our comments table will look something like this:
+Things get slightly more complicated when we talk about the relationship between a user and posts that the user has commented on. How would you describe that relationship? Well, a user obviously can comment on many posts, and a post has comments by many users. Yep, this is a many to many relationship. We can setup a many-to-many relationship using a join table. In this case, `comments` will act as our Join Table. Any table that contains two foreign keys can be thought of as a join table.  A row in our comments table will look something like this:
 
  |id | content     | post_id     | user_id |
 | :------------- | :------------- | :-------------|
 |1|"I loved this post!"      | 5       | 3
 
-For this instance, we know that comment with the id of `1` was created by the user with id `3` for the post with id `5`. We have all of the information we need to determine all of the posts that a particular user has commented on as well as all of the users who commented on any post. When we're done, we'll be able to simply call `@user.posts` to get a collection of all of those posts.
+For this instance, we know that comment with the id of `1` was created by the user with id `3` for the post with id `5`. We have all of the information we need to determine all of the posts that a particular user has commented on, as well as all of the users who commented on any post. When we're done, we'll be able to simply call `@user.posts` to get a collection of all of those posts.
 
 Let's set this up. First, we'll need migrations for a comments table, posts table, and users table. We've included migrations and models in this repo so you can follow along.
 
@@ -97,11 +97,11 @@ class Comment
 end
 ```
 
-Instances of our `User` model now respond to a method called `posts`. This will return a collection of posts that share a comment with the user.
+Notice that we can't just declare that our `User` `has_many :posts` because our `posts` table doesn't have a foreign key called `user_id`. Instead, we tell ActiveRecord to look through the `comments` table to figure out this association by declaring that our `User` `has_many :posts, through: :comments`. Now, instances of our `User` model  respond to a method called `posts`. This will return a collection of posts that share a comment with the user.
 
 ### Displaying Comments on Our Posts
 
-First, let's setup our posts show page to display all of the comments in our particular post. We'll include the username of the user who created the comment, as well as a link to their show page.
+Now that our association is setup, let's display some data. First, let's setup our posts show page to display all of the comments in our particular post. We'll include the username of the user who created the comment, as well as a link to their show page.
 
 In `app/controllers/posts_controller.rb`, define a `show` action that finds a have it load a particular post.
 
@@ -115,7 +115,7 @@ class PostsController < ApplicationController
 end
 ```
 
-In our posts show page, we'll display, the title and content information for the post, as well as the information of each comment associated with the post.
+In our posts show page, we'll display the title and content information for the post, as well as the information of each comment associated with the post.
 
 ```erb
 #app/views/posts/show.html.erb
@@ -130,7 +130,7 @@ Comments:
   <% end %>
 ```
 
-This is the same as we've done before - we're simply looking at data associated with posts and comments. Notice that we can manually go through and pull out the user through the comment. Calling `comment.user` returns to use the user object associated with that comment. We can then call any method that our user responds to, such as username.
+This is the same as we've done before - we're simply looking at data associated with posts and comments. Calling `comment.user` returns to use the user object associated with that comment. We can then call any method that our user responds to, such as username.
 
 ## Adding Posts to Our Users
 
@@ -148,10 +148,6 @@ Because we've setup a join model, the interface will look almost identical. We c
 
 ## Conclusion
 
-Displaying data through a has_many, through relationship looks identical to displaying data through a normal relationship. That's the beauty of abstraction - all of the details about how our models are associated with each other get abstracted away, and we can focus simply on the presentation. 
-
-## Resources
-
-https://robots.thoughtbot.com/accepts-nested-attributes-for-with-has-many-through
+Displaying data through a `has_many, through` relationship looks identical to displaying data through a normal relationship. That's the beauty of abstraction - all of the details about how our models are associated with each other get abstracted away, and we can focus simply on the presentation.
 
 <a href='https://learn.co/lessons/displaying-has-many-through-rails' data-visibility='hidden'>View this lesson on Learn.co</a>
