@@ -115,7 +115,7 @@ Notice that we can't just declare that our `User` `has_many :posts` because our 
 
 Now that our association is setup, let's display some data. First, let's setup our posts show page to display all of the comments in our particular post. We'll include the username of the user who created the comment, as well as a link to their show page.
 
-In `app/controllers/posts_controller.rb`, define a `show` action that finds a particular post to make it availble for display.
+In `app/controllers/posts_controller.rb`, define a `show` action that finds a particular post to make it available for display.
 
 ```ruby
 # app/controllers/posts_controller.rb
