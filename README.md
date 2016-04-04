@@ -115,7 +115,7 @@ Notice that we can't just declare that our `User` `has_many :posts` because our 
 
 Now that our association is setup, let's display some data. First, let's setup our posts show page to display all of the comments in our particular post. We'll include the username of the user who created the comment, as well as a link to their show page.
 
-In `app/controllers/posts_controller.rb`, define a `show` action that finds a have it load a particular post.
+In `app/controllers/posts_controller.rb`, define a `show` action that finds a particular post to make it availble for display.
 
 ```ruby
 # app/controllers/posts_controller.rb
@@ -127,7 +127,7 @@ class PostsController < ApplicationController
 end
 ```
 
-In our posts show page, we'll display the title and content information for the post, as well as the information of each comment associated with the post.
+In our posts show page, we'll display the title and content information for the post, as well as the information for each comment associated with the post.
 
 ```erb
 #app/views/posts/show.html.erb
@@ -142,13 +142,13 @@ Comments:
   <% end %>
 ```
 
-This is the same as we've done before - we're simply looking at data associated with posts and comments. Calling `comment.user` returns to use the user object associated with that comment. We can then call any method that our user responds to, such as username.
+This is the same as we've done before - we're simply looking at data associated with posts and comments. Calling `comment.user` returns for use the `user` object associated with that comment. We can then call any method that our user responds to, such as username.
 
 ## Adding Posts to Our Users
 
 Let's say that on our user's show page, we want our users to see a list of all of the posts that they've commented on. What would that look like?
 
-Because we've setup a join model, the interface will look almost identical. We can simply call on the `posts` method on our user and iterate through.
+Because we've set up a join model, the interface will look almost identical. We can simply call on the `posts` method on our user and iterate through.
 
 ```erb
 <h2><%= @user.username %> </h2> has commented on the following posts:
