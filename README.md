@@ -150,7 +150,7 @@ Comments:
   <% end %>
 ```
 
-This is the same as we've done before –– we're simply looking at data associated with posts and comments. Calling `comment.user` returns for use the `User` object associated with that comment. We can then call any method that our user responds to, such as `username`.
+This is the same as we've done before –– we're simply looking at data associated with posts and comments. Calling `comment.user` returns for us the `User` object associated with that comment. We can then call any method that our user responds to, such as `username`.
 
 ## Adding Posts to Our Users
 
