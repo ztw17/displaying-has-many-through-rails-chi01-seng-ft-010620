@@ -83,7 +83,6 @@ class CreateComments < ActiveRecord::Migration
     end
   end
 end
-end
 ```
 
 In our models, we have the following:
